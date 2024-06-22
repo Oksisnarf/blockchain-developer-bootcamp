@@ -63,7 +63,7 @@ describe('sending Tokens', () => {
     expect(await token.balanceOf(receiver.address)).to.equal(amount)
   })
 
-  it('emit a Transfer event', async () => {
+  it('emits a Transfer event', async () => {
     const event = result.events[0]
     expect(event.event).to.equal('Transfer')
 
