@@ -9,14 +9,28 @@ contract Exchange {
     uint256 public feePercent;
     mapping(address => mapping(address => uint256)) public tokens;
     mapping(uint256 => _Order) public orders;
-    uint256 public ordersCount;
+    uint256 public orderCount;
 
-    event Deposit(address token, address user, uint256 amount, uint256 balance);
+    event Deposit(
+        address token,
+        address user,
+        uint256 amount,
+        uint256 balance
+    );
     event Withdraw(
         address token,
         address user,
         uint256 amount,
         uint256 balance
+    );
+    event Order(
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        uint256 timestamp
     );
 
     struct _Order {
@@ -79,30 +93,33 @@ contract Exchange {
         address _tokenGet,
         uint256 _amountGet,
         address _tokenGive,
-        address _amountGive
+        uint256 _amountGive
     ) public {
+        // Prevent orders if tokens aren't on exchange
+        require(balanceOf(_tokenGive, msg.sender) >= _amountGive);
 
-//        uint256 id; // Unique identifier for order
-//        address user; // User who made order
-//        address tokenGet; // Address of the toke they receive
-//        uint256 amountGet; // Amout they receive
-//        address tokenGive; // Address of token they give
-//        uint256 amountGive; // Amount they give
-//        uint256 timestamp; // when order was created
-
-        orderCount = orderCount +1;
-
+        // Instantiate a new order
+        orderCount = orderCount + 1;
         orders[orderCount] = _Order(
-            orderCount, // id
-            msg.sender, // user
-            _tokenGet, // tokenGet
-            _amountGet, // amountGet
-            _tokenGive, // tokenGive
-            _amountGive, // amountGive
-            block.timestamp // timestamp 1893507958
+            orderCount,
+            msg.sender,
+            _tokenGet,
+            _amountGet,
+            _tokenGive,
+            _amountGive,
+            block.timestamp
+        );
+
+        // Emit event
+        emit Order(
+            orderCount,
+            msg.sender,
+            _tokenGet,
+            _amountGet,
+            _tokenGive,
+            _amountGive,
+            block.timestamp
         );
     }
-
-
 
 }
