@@ -11,6 +11,7 @@ import {
 } from '../store/interactions';
 
 import Navbar from './Navbar'
+import Markets from './Markets'
 
 function App() {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ function App() {
     // Connect Ethers to blockchain
     const provider = loadProvider(dispatch)
 
-    // fetch current network's chainId (e.g. hardhat: 31337. kovan: 42)
+    // Fetch current network's chainId (e.g. hardhat: 31337, kovan: 42)
     const chainId = await loadNetwork(provider, dispatch)
 
     // Reload page when network changes
@@ -44,7 +45,7 @@ function App() {
 
   useEffect(() => {
     loadBlockchainData()
-  })  
+  })
 
   return (
     <div>
@@ -54,7 +55,7 @@ function App() {
       <main className='exchange grid'>
         <section className='exchange__section--left grid'>
 
-          {/* Markets */}
+          <Markets />
 
           {/* Balance */}
 
