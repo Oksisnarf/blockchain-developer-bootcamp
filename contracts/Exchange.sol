@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+//SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
@@ -55,14 +55,14 @@ contract Exchange {
     );
 
     struct _Order {
-        // Attribute of an order
+        // Attributes of an order
         uint256 id; // Unique identifier for order
         address user; // User who made order
-        address tokenGet; // Address of the toke they receive
-        uint256 amountGet; // Amout they receive
+        address tokenGet; // Address of the token they receive
+        uint256 amountGet; // Amount they receive
         address tokenGive; // Address of token they give
         uint256 amountGive; // Amount they give
-        uint256 timestamp; // when order was created
+        uint256 timestamp; // When order was created
     }
 
     constructor(address _feeAccount, uint256 _feePercent) {
@@ -95,7 +95,7 @@ contract Exchange {
         // Update user balance
         tokens[_token][msg.sender] = tokens[_token][msg.sender] - _amount;
 
-        // Emit evernt
+        // Emit event
         emit Withdraw(_token, msg.sender, _amount, tokens[_token][msg.sender]);
     }
 
@@ -108,9 +108,9 @@ contract Exchange {
     }
 
 
-    // ---------------------
-    //MAKE & CANCEL ORDERS
-    
+    // ------------------------
+    // MAKE & CANCEL ORDERS
+
     function makeOrder(
         address _tokenGet,
         uint256 _amountGet,
@@ -148,7 +148,7 @@ contract Exchange {
         // Fetch order
         _Order storage _order = orders[_id];
 
-        // Ensure the caller of the function is owner of the order
+        // Ensure the caller of the function is the owner of the order
         require(address(_order.user) == msg.sender);
 
         // Order must exist
@@ -170,7 +170,7 @@ contract Exchange {
     }
 
 
-    // ----------------
+    // ------------------------
     // EXECUTING ORDERS
 
     function fillOrder(uint256 _id) public {
@@ -218,7 +218,7 @@ contract Exchange {
 
         tokens[_tokenGet][_user] = tokens[_tokenGet][_user] + _amountGet;
 
-        // Charge the fees
+        // Charge fees
         tokens[_tokenGet][feeAccount] =
             tokens[_tokenGet][feeAccount] +
             _feeAmount;
@@ -230,14 +230,14 @@ contract Exchange {
 
         // Emit trade event
         emit Trade(
-                _orderId,
-                msg.sender,
-                _tokenGet,
-                _amountGet,
-                _tokenGive,
-                _amountGive,
-                _user,
-                block.timestamp
+            _orderId,
+            msg.sender,
+            _tokenGet,
+            _amountGet,
+            _tokenGive,
+            _amountGive,
+            _user,
+            block.timestamp
         );
     }
 

@@ -17,7 +17,7 @@ async function main() {
   const { chainId } = await ethers.provider.getNetwork()
   console.log("Using chainId:", chainId)
 
-  //Fetch deployed tokens
+  // Fetch deployed tokens
   const DApp = await ethers.getContractAt('Token', config[chainId].DApp.address)
   console.log(`Dapp Token fetched: ${DApp.address}\n`)
 
@@ -31,17 +31,17 @@ async function main() {
   const exchange = await ethers.getContractAt('Exchange', config[chainId].exchange.address)
   console.log(`Exchange fetched: ${exchange.address}\n`)
 
-  // Give token to account[1]
+  // Give tokens to account[1]
   const sender = accounts[0]
   const receiver = accounts[1]
   let amount = tokens(10000)
 
-  // user1 transfer 10,000 mETH...
+  // user1 transfers 10,000 mETH...
   let transaction, result
   transaction = await mETH.connect(sender).transfer(receiver.address, amount)
   console.log(`Transferred ${amount} tokens from ${sender.address} to ${receiver.address}\n`)
 
-  // set up exchange users
+  // Set up exchange users
   const user1 = accounts[0]
   const user2 = accounts[1]
   amount = tokens(10000)
@@ -51,22 +51,22 @@ async function main() {
   await transaction.wait()
   console.log(`Approved ${amount} tokens from ${user1.address}`)
 
-  // user1 deposits 10,000 Dapp...
+  // user1 deposits 10,000 DApp...
   transaction = await exchange.connect(user1).depositToken(DApp.address, amount)
   await transaction.wait()
   console.log(`Deposited ${amount} Ether from ${user1.address}\n`)
 
-  // user2 Approves mETH
+  // User 2 Approves mETH
   transaction = await mETH.connect(user2).approve(exchange.address, amount)
   await transaction.wait()
   console.log(`Approved ${amount} tokens from ${user2.address}`)
 
-  // user2 deposits mETH
+  // User 2 Deposits mETH
   transaction = await exchange.connect(user2).depositToken(mETH.address, amount)
   await transaction.wait()
   console.log(`Deposited ${amount} tokens from ${user2.address}\n`)
 
-  //////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
   // Seed a Cancelled Order
   //
 
@@ -85,7 +85,7 @@ async function main() {
   // Wait 1 second
   await wait(1)
 
-  ///////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
   // Seed Filled Orders
   //
 
@@ -132,7 +132,7 @@ async function main() {
   await wait(1)
 
   /////////////////////////////////////////////////////////////
-  // Seed Orders
+  // Seed Open Orders
   //
 
   // User 1 makes 10 orders
@@ -147,7 +147,7 @@ async function main() {
   }
 
   // User 2 makes 10 orders
-  for(let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 10; i++) {
     transaction = await exchange.connect(user2).makeOrder(DApp.address, tokens(10), mETH.address, tokens(10 * i))
     result = await transaction.wait()
 
@@ -164,4 +164,4 @@ main()
   .catch((error) => {
     console.error(error);
     process.exit(1);
-});
+  });

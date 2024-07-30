@@ -72,6 +72,8 @@ const Balance = () => {
       transferTokens(provider, exchange, 'Withdraw', token, token2TransferAmount, dispatch)
       setToken2TransferAmount(0)
     }
+
+    console.log("withrawing tokens...")
   }
 
   useEffect(() => {
@@ -85,8 +87,8 @@ const Balance = () => {
       <div className='component__header flex-between'>
         <h2>Balance</h2>
         <div className='tabs'>
-          <button onClick={tabHandler} ref={depositRef}className='tab tab--active'>Deposit</button>
-          <button onClick={tabHandler} ref={withdrawRef}className='tab'>Withdraw</button>
+          <button onClick={tabHandler} ref={depositRef} className='tab tab--active'>Deposit</button>
+          <button onClick={tabHandler} ref={withdrawRef} className='tab'>Withdraw</button>
         </div>
       </div>
 
