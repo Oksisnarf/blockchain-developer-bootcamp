@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-/* Import Recucers */
+/* Import Reducers */
 import { provider, tokens, exchange } from './reducers'
 
 const reducer = combineReducers({

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+//SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
@@ -11,7 +11,7 @@ contract Token {
 
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
- 
+
     event Transfer(
         address indexed from,
         address indexed to,
@@ -36,14 +36,14 @@ contract Token {
     }
 
     function transfer(address _to, uint256 _value)
-       public
-       returns (bool success)
+        public
+        returns (bool success)
     {
-       require(balanceOf[msg.sender] >= _value);
-       
-       _transfer(msg.sender, _to, _value);
+        require(balanceOf[msg.sender] >= _value);
 
-       return true;
+        _transfer(msg.sender, _to, _value);
+
+        return true;
     }
 
     function _transfer(
